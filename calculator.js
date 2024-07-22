@@ -42,7 +42,7 @@ const operate = function(value) {
   if (!hasDecimal) {
     updateDisplay(displayValue);
   } else {
-    displayValue = displayValue.toFixed(5);
+    displayValue = parseFloat(displayValue.toFixed(5));
     updateDisplay(displayValue);
   }
 }
@@ -58,6 +58,7 @@ const clear = function() {
   currOperator = '';
   prevOperator = '';
   displayValue = '0';
+  currNumbers = 0
   updateDisplay(displayValue);
 }
 
@@ -66,8 +67,8 @@ let num2 = '';
 let currOperator = '';
 let prevOperator = '';
 let displayValue = '0';
-let maxNumber = 7;
-let currNumber = 0;
+let maxNumbers = 7;
+let currNumbers = 0;
 
 updateDisplay(displayValue);
 
@@ -75,26 +76,27 @@ const numbers = document.querySelectorAll('#number');
 numbers.forEach(button => {
   button.addEventListener('click', () => {
     if (currOperator == '') {
-        if (currNumber < 10) {
-          if (button.value == '.' && num1.includes('.') == false) {
+        if (currNumbers < maxNumbers) {
+          if (button.value == '.' && !num1.includes('.')) {
             num1 += button.value;
             updateDisplay(num1);
           } else if (button.value != '.') {
             num1 += button.value;
             updateDisplay(num1);
           }
-          currNumber++;
+          currNumbers++;
         }
     } else {
-      if (currNumber < 10) {
-        if (button.value == '.' && num2.includes('.') == false) {
+      currNumbers = 0;
+      if (currNumbers < maxNumbers) {
+        if (button.value == '.' && !num2.includes('.')) {
           num2 += button.value;
           updateDisplay(num2);
         } else if (button.value != '.') {
           num2 += button.value;
           updateDisplay(num2);
         }
-        currNumber++;
+        currNumbers++;
       }
     }
   });
@@ -112,7 +114,6 @@ operators.forEach(button => {
         operate(currOperator);
       }
     } else {
-      console.log(4);
       currOperator = button.value;
     }
   });
