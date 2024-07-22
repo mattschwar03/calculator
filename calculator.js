@@ -127,4 +127,4 @@ equals.addEventListener('click', () => {
 });
 
 const allClear = document.querySelector('#clear');
-allClear.addEventListener('click', () => clear())
+allClear.addEventListener('click', () => clear());
